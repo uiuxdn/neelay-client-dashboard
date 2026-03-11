@@ -1,0 +1,19 @@
+{
+  "project": "Neelay Design Studio Website",
+  "phase": "Research Phase",
+  "progress": 35,
+
+  "tasks": [
+    {"name": "Discovery", "status": "Completed"},
+    {"name": "Research", "status": "Completed"},
+    {"name": "UX Strategy", "status": "In Progress"},
+    {"name": "Wireframes", "status": "Pending"},
+    {"name": "UI Design", "status": "Pending"},
+    {"name": "Development", "status": "Pending"}
+  ],
+
+  "reports": [
+    {"name": "Research Report", "file": "../reports/research.pdf"},
+    {"name": "Wireframes", "file": "../reports/wireframes.pdf"}
+  ]
+}
