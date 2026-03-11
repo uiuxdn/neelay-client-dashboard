@@ -1,1 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
 
+<meta charset="UTF-8">
+<title>Neelay Client Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:Inter;
+background:#F6F8FB;
+margin:0;
+padding:40px;
+color:#1F2937;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+}
+
+.title{
+font-size:24px;
+font-weight:600;
+}
+
+.phase{
+background:#E0E7FF;
+color:#3730A3;
+padding:6px 14px;
+border-radius:20px;
+font-size:13px;
+}
+
+.card{
+background:white;
+padding:24px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+margin-bottom:20px;
+}
+
+.progress-bar{
+height:10px;
+background:#E5E7EB;
+border-radius:10px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress{
+height:100%;
+background:#6366F1;
+width:0%;
+transition:width .6s;
+}
+
+.task{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid #eee;
+}
+
+.badge{
+font-size:12px;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.completed{
+background:#D1FAE5;
+color:#065F46;
+}
+
+.progressing{
+background:#FEF3C7;
+color:#92400E;
+}
+
+.pending{
+background:#E5E7EB;
+color:#374151;
+}
+
+.report{
+display:flex;
+justify-content:space-between;
+padding:10px;
+background:#F9FAFB;
+border-radius:8px;
+margin-top:10px;
+}
+
+.report a{
+text-decoration:none;
+color:#6366F1;
+}
+
+.timeline-item{
+border-left:3px solid #6366F1;
+padding-left:15px;
+margin-top:10px;
+color:#6B7280;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div class="title">Neelay Design Studio</div>
+
+<div id="phase" class="phase"></div>
+
+</div>
+
+<div class="card">
+
+<h3>Project Progress</h3>
+
+<div class="progress-bar">
+<div id="progress" class="progress"></div>
+</div>
+
+<p id="progressText"></p>
+
+</div>
+
+<div class="card">
+
+<h3>Tasks</h3>
+
+<div id="tasks"></div>
+
+</div>
+
+<div class="card">
+
+<h3>Deliverables</h3>
+
+<div id="reports"></div>
+
+</div>
+
+<div class="card">
+
+<h3>Timeline</h3>
+
+<div class="timeline-item">Week 1 — Discovery</div>
+<div class="timeline-item">Week 2 — Research</div>
+<div class="timeline-item">Week 3 — UX Strategy</div>
+<div class="timeline-item">Week 4 — UI Design</div>
+<div class="timeline-item">Week 5 — Development</div>
+<div class="timeline-item">Week 6 — Launch</div>
+
+</div>
+
+</div>
+
+<script>
+
+fetch('../data/project.json')
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("phase").innerText=data.phase
+
+document.getElementById("progress").style.width=data.progress+"%"
+
+document.getElementById("progressText").innerText=data.progress+"% Completed"
+
+let tasksHTML=""
+
+data.tasks.forEach(task=>{
+
+let statusClass="pending"
+
+if(task.status=="Completed") statusClass="completed"
+if(task.status=="In Progress") statusClass="progressing"
+
+tasksHTML+=`
+<div class="task">
+<span>${task.name}</span>
+<span class="badge ${statusClass}">${task.status}</span>
+</div>
+`
+
+})
+
+document.getElementById("tasks").innerHTML=tasksHTML
+
+let reportHTML=""
+
+data.reports.forEach(report=>{
+
+reportHTML+=`
+<div class="report">
+<span>${report.name}</span>
+<a href="${report.file}" target="_blank">Download</a>
+</div>
+`
+
+})
+
+document.getElementById("reports").innerHTML=reportHTML
+
+})
+
+</script>
+
+</body>
+</html>
