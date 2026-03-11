@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neelay Project Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Neelay Client Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+
+:root{
+--bg:#f4f6fb;
+--card:#ffffff;
+--text:#1f2937;
+--accent:#6366f1;
+--muted:#6b7280;
+}
+
+.dark{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#f1f5f9;
+--muted:#94a3b8;
+}
 
 *{
 margin:0;
@@ -17,9 +34,10 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:#f5f6f8;
-color:#222;
+background:var(--bg);
+color:var(--text);
 padding:40px;
+transition:.3s;
 }
 
 .container{
@@ -34,42 +52,52 @@ align-items:center;
 margin-bottom:40px;
 }
 
-.title{
-font-size:28px;
+.logo{
+font-size:22px;
 font-weight:600;
 }
 
-.subtitle{
-color:#777;
-font-size:14px;
+.toggle{
+cursor:pointer;
+padding:8px 14px;
+border-radius:20px;
+background:var(--accent);
+color:white;
+font-size:12px;
 }
 
 .card{
-background:white;
+background:var(--card);
 padding:25px;
-border-radius:12px;
-box-shadow:0 10px 25px rgba(0,0,0,0.06);
-margin-bottom:25px;
-transition:transform .2s ease;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+margin-bottom:20px;
+transition:.2s;
 }
 
 .card:hover{
-transform:translateY(-4px);
+transform:translateY(-3px);
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
-.status{
-font-weight:600;
-color:#4CAF50;
+.stat-title{
+font-size:13px;
+color:var(--muted);
 }
 
-.progress-bar{
-background:#eaeaea;
+.stat-value{
+font-size:20px;
+font-weight:600;
+margin-top:6px;
+}
+
+.progress-container{
+background:#e5e7eb;
 height:10px;
 border-radius:10px;
 margin-top:10px;
@@ -78,56 +106,69 @@ overflow:hidden;
 
 .progress{
 height:100%;
-width:40%;
-background:#4CAF50;
+width:0%;
+background:linear-gradient(90deg,#6366f1,#4f46e5);
 border-radius:10px;
-transition:width 0.6s ease;
+transition:width 1s ease;
 }
 
 .task{
 display:flex;
 justify-content:space-between;
-padding:12px 0;
-border-bottom:1px solid #eee;
+padding:14px 0;
+border-bottom:1px solid rgba(0,0,0,0.05);
 }
 
-.done{
-color:#4CAF50;
-font-weight:500;
+.badge{
+font-size:12px;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.completed{
+background:#d1fae5;
+color:#047857;
+}
+
+.progressing{
+background:#fef3c7;
+color:#92400e;
 }
 
 .pending{
-color:#f39c12;
+background:#e5e7eb;
+color:#374151;
 }
 
-.deliverables a{
-display:block;
+.deliverable{
+display:flex;
+justify-content:space-between;
 padding:12px;
-background:#f5f6f8;
-border-radius:8px;
-margin-bottom:10px;
-text-decoration:none;
-color:#333;
-transition:background .2s;
+background:rgba(99,102,241,0.05);
+border-radius:10px;
+margin-top:10px;
 }
 
-.deliverables a:hover{
-background:#e9ebee;
+.deliverable a{
+text-decoration:none;
+color:var(--accent);
+font-size:13px;
 }
 
 .timeline-item{
-padding:12px 0;
-border-left:3px solid #4CAF50;
+border-left:3px solid var(--accent);
 padding-left:15px;
-margin-left:5px;
-color:#555;
+margin-left:6px;
+margin-top:10px;
+font-size:14px;
+color:var(--muted);
 }
 
 .footer{
 margin-top:40px;
 text-align:center;
-color:#888;
-font-size:13px;
+font-size:12px;
+color:var(--muted);
 }
 
 </style>
@@ -138,43 +179,40 @@ font-size:13px;
 <div class="container">
 
 <div class="header">
-<div>
-<div class="title">Neelay Design Studio</div>
-<div class="subtitle">Website Project Dashboard</div>
-</div>
 
-<div class="status">
-Research Phase
-</div>
+<div class="logo">Neelay Design Studio</div>
+
+<div class="toggle" onclick="toggleMode()">Dark Mode</div>
+
 </div>
 
 <div class="card">
 
 <h3>Project Progress</h3>
 
-<div class="progress-bar">
-<div class="progress"></div>
+<div class="progress-container">
+<div class="progress" id="progress"></div>
 </div>
 
-<p style="margin-top:10px;color:#666;">40% Completed</p>
+<p id="progressText" style="margin-top:10px;font-size:13px;color:var(--muted)">Calculating progress...</p>
 
 </div>
 
 <div class="grid">
 
 <div class="card">
-<h3>Start Date</h3>
-<p>March 2026</p>
+<div class="stat-title">Start Date</div>
+<div class="stat-value">March 2026</div>
 </div>
 
 <div class="card">
-<h3>Estimated Launch</h3>
-<p>April 2026</p>
+<div class="stat-title">Estimated Launch</div>
+<div class="stat-value">April 2026</div>
 </div>
 
 <div class="card">
-<h3>Project Type</h3>
-<p>Website Design & Development</p>
+<div class="stat-title">Project Type</div>
+<div class="stat-value">Website Design & Development</div>
 </div>
 
 </div>
@@ -185,32 +223,32 @@ Research Phase
 
 <div class="task">
 <span>Discovery</span>
-<span class="done">Completed</span>
+<span class="badge completed">Completed</span>
 </div>
 
 <div class="task">
 <span>Research</span>
-<span class="done">Completed</span>
+<span class="badge completed">Completed</span>
 </div>
 
 <div class="task">
 <span>UX Strategy</span>
-<span class="pending">In Progress</span>
+<span class="badge progressing">In Progress</span>
 </div>
 
 <div class="task">
 <span>Wireframes</span>
-<span>Pending</span>
+<span class="badge pending">Pending</span>
 </div>
 
 <div class="task">
 <span>UI Design</span>
-<span>Pending</span>
+<span class="badge pending">Pending</span>
 </div>
 
 <div class="task">
 <span>Development</span>
-<span>Pending</span>
+<span class="badge pending">Pending</span>
 </div>
 
 </div>
@@ -219,20 +257,16 @@ Research Phase
 
 <h3>Deliverables</h3>
 
-<div class="deliverables">
-
-<a href="#">Research Report</a>
-<a href="#">Wireframes</a>
-<a href="#">Design Preview</a>
-<a href="#">Final Website</a>
-
-</div>
+<div class="deliverable">Research Report <a href="#">View</a></div>
+<div class="deliverable">Wireframes <a href="#">View</a></div>
+<div class="deliverable">Design Preview <a href="#">View</a></div>
+<div class="deliverable">Final Website <a href="#">View</a></div>
 
 </div>
 
 <div class="card">
 
-<h3>Project Timeline</h3>
+<h3>Timeline</h3>
 
 <div class="timeline-item">Week 1 — Discovery</div>
 <div class="timeline-item">Week 2 — Research</div>
@@ -244,10 +278,28 @@ Research Phase
 </div>
 
 <div class="footer">
-Neelay Design Studio · Client Project Portal
+Client Portal · Neelay Design Studio
 </div>
 
 </div>
+
+<script>
+
+const completedTasks = 2
+const totalTasks = 6
+
+const progress = (completedTasks / totalTasks) * 100
+
+document.getElementById("progress").style.width = progress + "%"
+
+document.getElementById("progressText").innerText =
+Math.round(progress) + "% Completed"
+
+function toggleMode(){
+document.body.classList.toggle("dark")
+}
+
+</script>
 
 </body>
 </html>
