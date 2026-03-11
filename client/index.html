@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
 
+<head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Neelay Client Portal</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,7 +13,7 @@
 
 *{
 box-sizing:border-box;
-font-family:Inter;
+font-family:Inter, sans-serif;
 }
 
 body{
@@ -154,15 +156,18 @@ margin-top:10px;
 .report a{
 text-decoration:none;
 color:#6366f1;
+font-weight:500;
 }
 
 /* Activity */
 
 .activity{
-margin-top:10px;
 font-size:14px;
 color:#6b7280;
+margin-top:8px;
 }
+
+/* Timeline */
 
 .timeline-item{
 border-left:3px solid #6366f1;
@@ -172,7 +177,6 @@ color:#6b7280;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -193,9 +197,9 @@ color:#6b7280;
 
 <div class="header">
 
-<div class="project" id="projectTitle"></div>
+<div class="project" id="projectTitle">Project</div>
 
-<div class="phase" id="phase"></div>
+<div class="phase" id="phase">Phase</div>
 
 </div>
 
@@ -254,9 +258,9 @@ Expected this week
 
 <h3>Recent Activity</h3>
 
-<div class="activity">Research completed</div>
-<div class="activity">UX strategy started</div>
-<div class="activity">Wireframes planned</div>
+<div class="activity">Discovery completed</div>
+<div class="activity">Research phase started</div>
+<div class="activity">UX planning underway</div>
 
 </div>
 
@@ -281,27 +285,27 @@ Expected this week
 <script>
 
 fetch('../data/project.json')
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
-document.getElementById("projectTitle").innerText=data.project
+document.getElementById("projectTitle").innerText = data.project
 
-document.getElementById("phase").innerText=data.phase
+document.getElementById("phase").innerText = data.phase
 
-document.getElementById("progress").style.width=data.progress+"%"
+document.getElementById("progress").style.width = data.progress + "%"
 
-document.getElementById("progressText").innerText=data.progress+"% Completed"
+document.getElementById("progressText").innerText = data.progress + "% Completed"
 
-let tasksHTML=""
+let tasksHTML = ""
 
-data.tasks.forEach(task=>{
+data.tasks.forEach(task => {
 
-let statusClass="pending"
+let statusClass = "pending"
 
-if(task.status=="Completed") statusClass="completed"
-if(task.status=="In Progress") statusClass="progressing"
+if(task.status == "Completed") statusClass = "completed"
+if(task.status == "In Progress") statusClass = "progressing"
 
-tasksHTML+=`
+tasksHTML += `
 <div class="task">
 <span>${task.name}</span>
 <span class="badge ${statusClass}">${task.status}</span>
@@ -310,13 +314,13 @@ tasksHTML+=`
 
 })
 
-document.getElementById("tasks").innerHTML=tasksHTML
+document.getElementById("tasks").innerHTML = tasksHTML
 
-let reportHTML=""
+let reportHTML = ""
 
-data.reports.forEach(report=>{
+data.reports.forEach(report => {
 
-reportHTML+=`
+reportHTML += `
 <div class="report">
 <span>${report.name}</span>
 <a href="${report.file}" target="_blank">View</a>
@@ -325,7 +329,7 @@ reportHTML+=`
 
 })
 
-document.getElementById("reports").innerHTML=reportHTML
+document.getElementById("reports").innerHTML = reportHTML
 
 })
 
