@@ -11,21 +11,6 @@
 
 <style>
 
-:root{
---bg:#f4f6fb;
---card:#ffffff;
---text:#1f2937;
---accent:#6366f1;
---muted:#6b7280;
-}
-
-.dark{
---bg:#0f172a;
---card:#1e293b;
---text:#f1f5f9;
---muted:#94a3b8;
-}
-
 *{
 margin:0;
 padding:0;
@@ -34,43 +19,67 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:var(--bg);
-color:var(--text);
-padding:40px;
-transition:.3s;
+display:flex;
+background:#f4f6fb;
+color:#1f2937;
+height:100vh;
 }
 
-.container{
-max-width:1100px;
-margin:auto;
+/* Sidebar */
+
+.sidebar{
+width:220px;
+background:#111827;
+color:white;
+padding:30px 20px;
+}
+
+.logo{
+font-weight:600;
+font-size:18px;
+margin-bottom:40px;
+}
+
+.nav-item{
+margin:15px 0;
+cursor:pointer;
+opacity:.8;
+}
+
+.nav-item:hover{
+opacity:1;
+}
+
+/* Main */
+
+.main{
+flex:1;
+padding:40px;
+overflow:auto;
 }
 
 .header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:40px;
+margin-bottom:30px;
 }
 
-.logo{
-font-size:22px;
-font-weight:600;
-}
-
-.toggle{
-cursor:pointer;
-padding:8px 14px;
+.status{
+background:#d1fae5;
+color:#047857;
+padding:6px 14px;
 border-radius:20px;
-background:var(--accent);
-color:white;
-font-size:12px;
+font-size:13px;
 }
+
+/* Cards */
 
 .card{
-background:var(--card);
+background:white;
 padding:25px;
-border-radius:14px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
+border-radius:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.05);
 margin-bottom:20px;
 transition:.2s;
 }
@@ -79,110 +88,116 @@ transition:.2s;
 transform:translateY(-3px);
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
+/* Progress */
 
-.stat-title{
-font-size:13px;
-color:var(--muted);
-}
-
-.stat-value{
-font-size:20px;
-font-weight:600;
-margin-top:6px;
-}
-
-.progress-container{
-background:#e5e7eb;
+.progress-bar{
 height:10px;
+background:#e5e7eb;
 border-radius:10px;
-margin-top:10px;
 overflow:hidden;
+margin-top:10px;
 }
 
 .progress{
 height:100%;
 width:0%;
 background:linear-gradient(90deg,#6366f1,#4f46e5);
-border-radius:10px;
-transition:width 1s ease;
+transition:width .8s;
 }
+
+/* Tasks */
 
 .task{
 display:flex;
 justify-content:space-between;
-padding:14px 0;
-border-bottom:1px solid rgba(0,0,0,0.05);
+align-items:center;
+padding:12px 0;
+border-bottom:1px solid #eee;
 }
 
-.badge{
+.task button{
+background:#6366f1;
+border:none;
+color:white;
+padding:5px 12px;
+border-radius:6px;
+cursor:pointer;
 font-size:12px;
-padding:4px 10px;
-border-radius:20px;
 }
 
-.completed{
-background:#d1fae5;
-color:#047857;
+.task button:hover{
+background:#4f46e5;
 }
 
-.progressing{
-background:#fef3c7;
-color:#92400e;
-}
-
-.pending{
-background:#e5e7eb;
-color:#374151;
-}
+/* Deliverables */
 
 .deliverable{
 display:flex;
 justify-content:space-between;
 padding:12px;
-background:rgba(99,102,241,0.05);
-border-radius:10px;
+border-radius:8px;
+background:#f9fafb;
 margin-top:10px;
 }
 
 .deliverable a{
 text-decoration:none;
-color:var(--accent);
-font-size:13px;
+color:#6366f1;
+}
+
+/* Timeline */
+
+.timeline{
+margin-top:10px;
 }
 
 .timeline-item{
-border-left:3px solid var(--accent);
+border-left:3px solid #6366f1;
 padding-left:15px;
-margin-left:6px;
+margin-left:5px;
 margin-top:10px;
-font-size:14px;
-color:var(--muted);
+color:#6b7280;
 }
 
-.footer{
-margin-top:40px;
-text-align:center;
-font-size:12px;
-color:var(--muted);
+/* Responsive */
+
+@media(max-width:800px){
+
+.sidebar{
+display:none;
+}
+
+body{
+flex-direction:column;
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="sidebar">
+
+<div class="logo">Neelay Portal</div>
+
+<div class="nav-item">Overview</div>
+<div class="nav-item">Tasks</div>
+<div class="nav-item">Deliverables</div>
+<div class="nav-item">Timeline</div>
+<div class="nav-item">Support</div>
+
+</div>
+
+<div class="main">
 
 <div class="header">
 
-<div class="logo">Neelay Design Studio</div>
+<h2>Website Project Dashboard</h2>
 
-<div class="toggle" onclick="toggleMode()">Dark Mode</div>
+<div class="status">Research Phase</div>
 
 </div>
 
@@ -190,65 +205,46 @@ color:var(--muted);
 
 <h3>Project Progress</h3>
 
-<div class="progress-container">
+<div class="progress-bar">
 <div class="progress" id="progress"></div>
 </div>
 
-<p id="progressText" style="margin-top:10px;font-size:13px;color:var(--muted)">Calculating progress...</p>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="stat-title">Start Date</div>
-<div class="stat-value">March 2026</div>
-</div>
-
-<div class="card">
-<div class="stat-title">Estimated Launch</div>
-<div class="stat-value">April 2026</div>
-</div>
-
-<div class="card">
-<div class="stat-title">Project Type</div>
-<div class="stat-value">Website Design & Development</div>
-</div>
+<p id="progressText" style="margin-top:8px;color:#6b7280;font-size:13px"></p>
 
 </div>
 
 <div class="card">
 
-<h3>Project Tasks</h3>
+<h3>Tasks</h3>
 
 <div class="task">
 <span>Discovery</span>
-<span class="badge completed">Completed</span>
+<button onclick="completeTask()">Complete</button>
 </div>
 
 <div class="task">
 <span>Research</span>
-<span class="badge completed">Completed</span>
+<button onclick="completeTask()">Complete</button>
 </div>
 
 <div class="task">
 <span>UX Strategy</span>
-<span class="badge progressing">In Progress</span>
+<button onclick="completeTask()">Complete</button>
 </div>
 
 <div class="task">
 <span>Wireframes</span>
-<span class="badge pending">Pending</span>
+<button onclick="completeTask()">Complete</button>
 </div>
 
 <div class="task">
 <span>UI Design</span>
-<span class="badge pending">Pending</span>
+<button onclick="completeTask()">Complete</button>
 </div>
 
 <div class="task">
 <span>Development</span>
-<span class="badge pending">Pending</span>
+<button onclick="completeTask()">Complete</button>
 </div>
 
 </div>
@@ -257,10 +253,21 @@ color:var(--muted);
 
 <h3>Deliverables</h3>
 
-<div class="deliverable">Research Report <a href="#">View</a></div>
-<div class="deliverable">Wireframes <a href="#">View</a></div>
-<div class="deliverable">Design Preview <a href="#">View</a></div>
-<div class="deliverable">Final Website <a href="#">View</a></div>
+<div class="deliverable">
+Research Report <a href="#">View</a>
+</div>
+
+<div class="deliverable">
+Wireframes <a href="#">View</a>
+</div>
+
+<div class="deliverable">
+Design Preview <a href="#">View</a>
+</div>
+
+<div class="deliverable">
+Final Website <a href="#">View</a>
+</div>
 
 </div>
 
@@ -268,35 +275,39 @@ color:var(--muted);
 
 <h3>Timeline</h3>
 
+<div class="timeline">
+
 <div class="timeline-item">Week 1 — Discovery</div>
 <div class="timeline-item">Week 2 — Research</div>
-<div class="timeline-item">Week 3 — UX Planning</div>
+<div class="timeline-item">Week 3 — UX Strategy</div>
 <div class="timeline-item">Week 4 — UI Design</div>
 <div class="timeline-item">Week 5 — Development</div>
 <div class="timeline-item">Week 6 — Launch</div>
 
 </div>
 
-<div class="footer">
-Client Portal · Neelay Design Studio
 </div>
 
 </div>
 
 <script>
 
-const completedTasks = 2
-const totalTasks = 6
+let completed = 0
+const total = 6
 
-const progress = (completedTasks / totalTasks) * 100
+function completeTask(){
 
-document.getElementById("progress").style.width = progress + "%"
+completed++
+
+if(completed>total) return
+
+const progress = (completed/total)*100
+
+document.getElementById("progress").style.width = progress+"%"
 
 document.getElementById("progressText").innerText =
-Math.round(progress) + "% Completed"
+Math.round(progress)+"% Completed"
 
-function toggleMode(){
-document.body.classList.toggle("dark")
 }
 
 </script>
