@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Client Portal</title>
+<title>Neelay Client Portal</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -16,9 +16,8 @@ font-family:Inter;
 
 body{
 margin:0;
-background:#f5f7fb;
+background:#f8fafc;
 display:flex;
-height:100vh;
 color:#1f2937;
 }
 
@@ -26,19 +25,20 @@ color:#1f2937;
 
 .sidebar{
 width:240px;
-background:#111827;
+background:#0f172a;
 color:white;
 padding:30px 20px;
+min-height:100vh;
 }
 
 .logo{
-font-weight:600;
 font-size:18px;
+font-weight:600;
 margin-bottom:40px;
 }
 
 .nav{
-margin:15px 0;
+margin:14px 0;
 opacity:.8;
 cursor:pointer;
 }
@@ -52,7 +52,36 @@ opacity:1;
 .main{
 flex:1;
 padding:40px;
-overflow:auto;
+}
+
+/* Header */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.project{
+font-size:24px;
+font-weight:600;
+}
+
+.phase{
+background:#dcfce7;
+color:#166534;
+padding:6px 12px;
+border-radius:20px;
+font-size:13px;
+}
+
+/* Grid */
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
 }
 
 /* Cards */
@@ -62,7 +91,6 @@ background:white;
 padding:24px;
 border-radius:14px;
 box-shadow:0 8px 20px rgba(0,0,0,0.05);
-margin-bottom:20px;
 }
 
 /* Progress */
@@ -87,7 +115,7 @@ transition:width .6s;
 .task{
 display:flex;
 justify-content:space-between;
-padding:12px 0;
+padding:10px 0;
 border-bottom:1px solid #eee;
 }
 
@@ -112,14 +140,14 @@ background:#e5e7eb;
 color:#374151;
 }
 
-/* Deliverables */
+/* Reports */
 
 .report{
 display:flex;
 justify-content:space-between;
-padding:12px;
-border-radius:8px;
+padding:10px;
 background:#f9fafb;
+border-radius:8px;
 margin-top:10px;
 }
 
@@ -128,11 +156,17 @@ text-decoration:none;
 color:#6366f1;
 }
 
-/* Timeline */
+/* Activity */
+
+.activity{
+margin-top:10px;
+font-size:14px;
+color:#6b7280;
+}
 
 .timeline-item{
 border-left:3px solid #6366f1;
-padding-left:15px;
+padding-left:12px;
 margin-top:10px;
 color:#6b7280;
 }
@@ -147,8 +181,8 @@ color:#6b7280;
 
 <div class="logo">Neelay Portal</div>
 
-<div class="nav">Overview</div>
-<div class="nav">Progress</div>
+<div class="nav">Dashboard</div>
+<div class="nav">Tasks</div>
 <div class="nav">Deliverables</div>
 <div class="nav">Timeline</div>
 <div class="nav">Support</div>
@@ -157,10 +191,21 @@ color:#6b7280;
 
 <div class="main">
 
+<div class="header">
+
+<div class="project" id="projectTitle"></div>
+
+<div class="phase" id="phase"></div>
+
+</div>
+
+<div class="grid">
+
+<!-- Progress -->
+
 <div class="card">
 
-<h3 id="projectTitle"></h3>
-<p id="phase"></p>
+<h3>Project Progress</h3>
 
 <div class="progress-bar">
 <div id="progress" class="progress"></div>
@@ -170,13 +215,30 @@ color:#6b7280;
 
 </div>
 
+<!-- Next milestone -->
+
 <div class="card">
 
-<h3>Project Tasks</h3>
+<h3>Next Milestone</h3>
+
+<p>Wireframes ready for review</p>
+<p style="color:#6b7280;font-size:14px;margin-top:6px">
+Expected this week
+</p>
+
+</div>
+
+<!-- Tasks -->
+
+<div class="card">
+
+<h3>Tasks</h3>
 
 <div id="tasks"></div>
 
 </div>
+
+<!-- Deliverables -->
 
 <div class="card">
 
@@ -185,6 +247,20 @@ color:#6b7280;
 <div id="reports"></div>
 
 </div>
+
+<!-- Activity -->
+
+<div class="card">
+
+<h3>Recent Activity</h3>
+
+<div class="activity">Research completed</div>
+<div class="activity">UX strategy started</div>
+<div class="activity">Wireframes planned</div>
+
+</div>
+
+<!-- Timeline -->
 
 <div class="card">
 
@@ -195,7 +271,8 @@ color:#6b7280;
 <div class="timeline-item">Week 3 — UX Strategy</div>
 <div class="timeline-item">Week 4 — UI Design</div>
 <div class="timeline-item">Week 5 — Development</div>
-<div class="timeline-item">Week 6 — Launch</div>
+
+</div>
 
 </div>
 
@@ -242,7 +319,7 @@ data.reports.forEach(report=>{
 reportHTML+=`
 <div class="report">
 <span>${report.name}</span>
-<a href="${report.file}" target="_blank">Download</a>
+<a href="${report.file}" target="_blank">View</a>
 </div>
 `
 
